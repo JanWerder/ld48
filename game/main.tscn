@@ -26,10 +26,10 @@ height = 1.21168
 
 [sub_resource type="AnimationNodeBlendSpace1D" id=5]
 
-[sub_resource type="ConcavePolygonShape" id=7]
+[sub_resource type="ConcavePolygonShape" id=6]
 data = PoolVector3Array( 25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 0.0235772, 1.11565, 0.318018 )
 
 [node name="root" type="Spatial"]
@@ -85,7 +85,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Water/WaterBody"]
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 
 [node name="Lake_Sculpt" parent="." instance=ExtResource( 3 )]
 
@@ -96,19 +96,19 @@ collision_mask = 3
 
 [node name="CollisionShape2" type="CollisionShape" parent="StaticBody"]
 transform = Transform( -5.46392e-06, 0, 125, 0, 20, 0, -125, 0, -5.46392e-06, -0.348297, 6.41969, 38.0503 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="StaticBody"]
 transform = Transform( -125, 0, -1.09278e-05, 0, 20, 0, 1.09278e-05, 0, -125, -37.8706, 6.41969, 1.49228 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 1.49061e-06, 0, 125, 0, 20, 0, -125, 0, 1.49061e-06, -1.61174, 6.41969, -26.4957 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="StaticBody"]
 transform = Transform( 125, 0, 0, 0, 20, 0, 0, 0, 125, 35.2133, 6.41969, 10.7315 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="WorldCollision" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.73312, 0, -4.25626 )
