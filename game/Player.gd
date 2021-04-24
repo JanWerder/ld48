@@ -16,10 +16,12 @@ const MOTION_INTERPOLATE_SPEED = 10
 const CAMERA_X_ROT_MIN = -40
 const CAMERA_X_ROT_MAX = 30
 const ROTATION_INTERPOLATE_SPEED = 10
-const SPEED = 1.25
+const SPEED = 5
 
 onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 var camera_x_rot = 0.0
+
+var is_fishing = false
 
 func _init():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -27,7 +29,6 @@ func _init():
 func _ready():
 	orientation = player_model.global_transform
 	orientation.origin = Vector3()
-
 
 func _physics_process(delta):
 	var camera_move = Vector2(
@@ -59,7 +60,7 @@ func _physics_process(delta):
 		# Interpolate current rotation with desired one.
 		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	
-	var h_velocity = Transform.IDENTITY.origin / delta
+	#var h_velocity = Transform.IDENTITY.origin / delta
 	velocity.x = -motion.x * SPEED
 	velocity.z = -motion.y * SPEED
 	velocity += gravity * delta
@@ -72,6 +73,8 @@ func _physics_process(delta):
 	orientation = orientation.orthonormalized() # Orthonormalize orientation.
 
 	player_model.global_transform.basis = orientation.basis
+	
+	#if not is_fishing and Input.is_action_just_pressed("fish"):
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)

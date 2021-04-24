@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/T_Lake_Mask.png-1706865400b0a929867a19d9fc99a9f5.s3tc.stex"
-path.etc2="res://.import/T_Lake_Mask.png-1706865400b0a929867a19d9fc99a9f5.etc2.stex"
+path.s3tc="res://.import/T_Lake_Mask.png-7756c60dbbc02987ae0a41755f254354.s3tc.stex"
+path.etc2="res://.import/T_Lake_Mask.png-7756c60dbbc02987ae0a41755f254354.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Shader Material/T_Lake_Mask.png"
-dest_files=[ "res://.import/T_Lake_Mask.png-1706865400b0a929867a19d9fc99a9f5.s3tc.stex", "res://.import/T_Lake_Mask.png-1706865400b0a929867a19d9fc99a9f5.etc2.stex" ]
+source_file="res://lake/T_Lake_Mask.png"
+dest_files=[ "res://.import/T_Lake_Mask.png-7756c60dbbc02987ae0a41755f254354.s3tc.stex", "res://.import/T_Lake_Mask.png-7756c60dbbc02987ae0a41755f254354.etc2.stex" ]
 
 [params]
 

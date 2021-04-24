@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/noiseTexture.png-b4f6ec8c2c5a4edfedb9dad79f0be0b5.stex"
+path="res://.import/noiseTexture.png-b417dafdc3a4e924b35cd9674371d63d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shader Material/noiseTexture.png"
-dest_files=[ "res://.import/noiseTexture.png-b4f6ec8c2c5a4edfedb9dad79f0be0b5.stex" ]
+source_file="res://lake/noiseTexture.png"
+dest_files=[ "res://.import/noiseTexture.png-b417dafdc3a4e924b35cd9674371d63d.stex" ]
 
 [params]
 
