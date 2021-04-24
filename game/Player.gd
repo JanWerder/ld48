@@ -1,9 +1,12 @@
 extends KinematicBody
 
 onready var player_model = $PlayerModel
+onready var player = $Player
 onready var camera_base = $CameraBase
 onready var animation_tree = $AnimationTree
 onready var camera_rot = camera_base.get_node(@"CameraRot")
+onready var camera_spring_arm = camera_rot.get_node(@"SpringArm")
+onready var camera_camera = camera_spring_arm.get_node(@"Camera")
 
 var orientation = Transform()
 var root_motion = Transform()
@@ -74,7 +77,27 @@ func _physics_process(delta):
 
 	player_model.global_transform.basis = orientation.basis
 	
-	#if not is_fishing and Input.is_action_just_pressed("fish"):
+	if not is_fishing and Input.is_action_just_pressed("fish"):
+		var shoot_origin = player_model.global_transform.origin
+		var ray_from = camera_camera.project_ray_origin(Vector2(0,0))
+		var ray_dir = camera_camera.project_ray_normal(Vector2(0,0))
+		
+		var shoot_target
+		var col = get_world().direct_space_state.intersect_ray(ray_from, ray_from + ray_dir * 1000, [self], 0b11)
+		if col.empty():
+			shoot_target = ray_from + ray_dir * 1000
+		else:
+			shoot_target = col.position
+		var shoot_dir = (shoot_target - shoot_origin).normalized()
+		
+		var bullet = preload("res://scenes/Bait.tscn").instance()				
+		bullet.global_transform.origin = shoot_origin + Vector3(0,3,0)
+		var dvel = velocity + Vector3(0,2,0)
+		print("vel", dvel)
+		bullet.shoot_dir = dvel
+		get_parent().add_child(bullet)
+		bullet.look_at(dvel, Vector3.UP) #shoot_origin + shoot_dir
+		bullet.add_collision_exception_with(player)
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)
