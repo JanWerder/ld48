@@ -16,6 +16,7 @@ const MOTION_INTERPOLATE_SPEED = 10
 const CAMERA_X_ROT_MIN = -40
 const CAMERA_X_ROT_MAX = 30
 const ROTATION_INTERPOLATE_SPEED = 10
+const SPEED = 1.25
 
 onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 var camera_x_rot = 0.0
@@ -50,9 +51,7 @@ func _physics_process(delta):
 	camera_x.y = 0
 	camera_x = camera_x.normalized()
 	
-	
-	# var diffXY = Vector2(motion.x, -motion.y)
-	
+
 	var target = camera_x * motion.x + camera_z * motion.y
 	if target.length() > 0.001:
 		var q_from = orientation.basis.get_rotation_quat()
@@ -60,18 +59,13 @@ func _physics_process(delta):
 		# Interpolate current rotation with desired one.
 		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	
-	var h_velocity = orientation.origin / delta
-	velocity.x = h_velocity.x
-	velocity.z = h_velocity.z
+	var h_velocity = Transform.IDENTITY.origin / delta
+	velocity.x = -motion.x * SPEED
+	velocity.z = -motion.y * SPEED
 	velocity += gravity * delta
 	velocity = move_and_slide(velocity, Vector3.UP)
 	
-	print(motion)
-	
-	animation_tree["parameters/walk/blend_position"] = Vector2(motion.length(), 0)	
-	
 	root_motion = animation_tree.get_root_motion_transform()
-	# Apply root motion to orientation.
 	orientation *= root_motion
 	
 	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).	
@@ -81,7 +75,6 @@ func _physics_process(delta):
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)
-	# After relative transforms, camera needs to be renormalized.
 	camera_base.orthonormalize()
 	camera_x_rot += move.y
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
