@@ -1,4 +1,4 @@
-[gd_resource type="PlaneMesh" load_steps=7 format=2]
+[gd_resource type="PlaneMesh" load_steps=9 format=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -78,34 +78,45 @@ void fragment(){
 	SPECULAR = 1f;
 }"
 
-[sub_resource type="NoiseTexture" id=2]
+[sub_resource type="OpenSimplexNoise" id=2]
 
 [sub_resource type="NoiseTexture" id=3]
 seamless = true
+as_normalmap = true
+bump_strength = 3.4
+noise = SubResource( 2 )
 
 [sub_resource type="OpenSimplexNoise" id=4]
 
 [sub_resource type="NoiseTexture" id=5]
 seamless = true
 as_normalmap = true
-bump_strength = 4.0
+bump_strength = 2.5
 noise = SubResource( 4 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="OpenSimplexNoise" id=6]
+
+[sub_resource type="NoiseTexture" id=7]
+seamless = true
+as_normalmap = true
+bump_strength = 4.0
+noise = SubResource( 6 )
+
+[sub_resource type="ShaderMaterial" id=8]
 shader = SubResource( 1 )
-shader_param/speed = 0.001
-shader_param/color = Color( 0.133333, 0, 1, 1 )
-shader_param/edge_color = Color( 1, 1, 1, 1 )
+shader_param/speed = 0.005
+shader_param/color = Color( 0.372549, 0.384314, 1, 1 )
+shader_param/edge_color = Color( 0.772549, 0.780392, 1, 1 )
 shader_param/edge_scale = 0.25
 shader_param/near = 0.1
 shader_param/far = 100.0
 shader_param/wave_strengh = Vector2( 0.05, 0.025 )
 shader_param/wave_frequency = Vector2( 12, 12 )
 shader_param/time_factor = Vector2( 1, 2 )
-shader_param/noise1 = SubResource( 2 )
-shader_param/noise2 = SubResource( 3 )
-shader_param/normalmap = SubResource( 5 )
+shader_param/noise1 = SubResource( 3 )
+shader_param/noise2 = SubResource( 5 )
+shader_param/normalmap = SubResource( 7 )
 
 [resource]
-material = SubResource( 6 )
+material = SubResource( 8 )
 size = Vector2( 50, 50 )
