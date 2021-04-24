@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://models/Player_Human.glb" type="PackedScene" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -25,6 +25,9 @@ radius = 0.441441
 height = 1.21168
 
 [sub_resource type="AnimationNodeBlendSpace1D" id=5]
+
+[sub_resource type="ConvexPolygonShape" id=8]
+points = PoolVector3Array( -25.1366, 0.136612, -25.1366, -25.1366, 0.136612, 25.1366, 25.1366, 0.136612, -25.1366, 25.1366, 0.136612, 25.1366 )
 
 [sub_resource type="ConcavePolygonShape" id=6]
 data = PoolVector3Array( 25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25 )
@@ -81,10 +84,16 @@ mesh = ExtResource( 4 )
 material/0 = null
 
 [node name="WaterBody" type="StaticBody" parent="Water"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 collision_layer = 3
 collision_mask = 3
 
+[node name="CollisionShape2" type="CollisionShape" parent="Water/WaterBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.51586, 0 )
+shape = SubResource( 8 )
+
 [node name="CollisionShape" type="CollisionShape" parent="Water/WaterBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 shape = SubResource( 6 )
 
 [node name="Lake_Sculpt" parent="." instance=ExtResource( 3 )]

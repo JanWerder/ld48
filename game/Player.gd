@@ -25,6 +25,7 @@ onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") 
 var camera_x_rot = 0.0
 
 var is_fishing = false
+var bait = null
 
 func _init():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -77,6 +78,10 @@ func _physics_process(delta):
 
 	player_model.global_transform.basis = orientation.basis
 	
+	if is_fishing and Input.is_action_just_pressed("fish") and bait:
+		bait.queue_free()
+		is_fishing = false
+	
 	if not is_fishing and Input.is_action_just_pressed("fish"):
 		var shoot_origin = player_model.global_transform.origin
 		var ray_from = camera_camera.project_ray_origin(Vector2(0,0))
@@ -90,14 +95,16 @@ func _physics_process(delta):
 			shoot_target = col.position
 		var shoot_dir = (shoot_target - shoot_origin).normalized()
 		
-		var bullet = preload("res://scenes/Bait.tscn").instance()				
-		bullet.global_transform.origin = shoot_origin + Vector3(0,3,0)
+		bait = preload("res://scenes/Bait.tscn").instance()
+		bait.global_transform.origin = shoot_origin + Vector3(0,3,0)
 		var dvel = velocity + Vector3(0,2,0)
-		print("vel", dvel)
-		bullet.shoot_dir = dvel
-		get_parent().add_child(bullet)
-		bullet.look_at(dvel, Vector3.UP) #shoot_origin + shoot_dir
-		bullet.add_collision_exception_with(player)
+		#print("vel", dvel)
+		bait.shoot_dir = dvel
+		get_parent().add_child(bait)
+		bait.look_at(dvel, Vector3.UP)
+		bait.add_collision_exception_with(player)
+		
+		is_fishing = true	
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)
