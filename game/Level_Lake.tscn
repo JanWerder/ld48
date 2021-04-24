@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Lake_Sculpt.glb" type="PackedScene" id=1]
-[ext_resource path="res://Shader Material/MAT_Lake Landscape Shader.material" type="Material" id=2]
+[ext_resource path="res://models/Lake_Sculpt.glb" type="PackedScene" id=1]
+[ext_resource path="res://Shader Material/MAT_Lake Landscape.material" type="Material" id=2]
 
 [node name="Lake_Sculpt" instance=ExtResource( 1 )]
 
