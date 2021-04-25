@@ -1,7 +1,7 @@
 extends KinematicBody
 
 onready var player_model = $PlayerModel
-onready var player = $Player
+onready var player = self
 onready var camera_base = $CameraBase
 onready var animation_tree = $AnimationTree
 onready var camera_rot = camera_base.get_node(@"CameraRot")
@@ -64,7 +64,6 @@ func _physics_process(delta):
 		# Interpolate current rotation with desired one.
 		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	
-	#var h_velocity = Transform.IDENTITY.origin / delta
 	velocity.x = -motion.x * SPEED
 	velocity.z = -motion.y * SPEED
 	velocity += gravity * delta
@@ -79,8 +78,11 @@ func _physics_process(delta):
 	player_model.global_transform.basis = orientation.basis
 	
 	if is_fishing and Input.is_action_just_pressed("fish") and bait:
-		bait.queue_free()
-		is_fishing = false
+		if bait.is_dipped_down:
+			pass
+		else:
+			bait.queue_free()
+			is_fishing = false
 	
 	if not is_fishing and Input.is_action_just_pressed("fish"):
 		var shoot_origin = player_model.global_transform.origin
@@ -103,6 +105,7 @@ func _physics_process(delta):
 		get_parent().add_child(bait)
 		bait.look_at(dvel, Vector3.UP)
 		bait.add_collision_exception_with(player)
+		bait.connect("wrong_surface", self, "on_bait_wrong_surface")
 		
 		is_fishing = true	
 
@@ -112,3 +115,8 @@ func rotate_camera(move):
 	camera_x_rot += move.y
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 	camera_rot.rotation.x = camera_x_rot
+
+func on_bait_wrong_surface():
+	print("wrong_surface")
+	bait.queue_free()
+	is_fishing = false

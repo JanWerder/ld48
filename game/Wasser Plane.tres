@@ -132,7 +132,7 @@ noise = SubResource( 6 )
 [sub_resource type="ShaderMaterial" id=8]
 shader = SubResource( 1 )
 shader_param/speed = 0.005
-shader_param/color = Color( 0.247059, 0.529412, 0.541176, 1 )
+shader_param/color = Color( 0.247059, 0.529412, 0.541176, 0.929412 )
 shader_param/deep_water = null
 shader_param/beer_law_factor = 2.0
 shader_param/_distance = 0.0
