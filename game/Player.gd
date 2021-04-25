@@ -87,7 +87,8 @@ func _physics_process(delta):
 	if is_fishing and Input.is_action_just_pressed("fish") and bait:
 		if bait.is_dipped_down:
 			emit_signal("pullout_fish")
-			on_clear_bait()
+			bait.queue_free()
+			is_fishing = false
 			#player_model.look_at(camera_camera.transform.origin, Vector3.UP)
 			#player_model.global_transform.basis = camera_camera.global_transform.basis
 			return

@@ -15,6 +15,7 @@ var is_dipped_down = false
 signal wrong_surface
 
 onready var splash_particles = $SplashParticles
+onready var camera_camera = get_tree().get_root().get_node("Level").get_node("Player/CameraBase/CameraRot/SpringArm/Camera")
 	
 func _ready():
 	var vel = shoot_dir * 2
@@ -32,6 +33,8 @@ func _physics_process(delta):
 			angular_velocity = Vector3.ZERO;
 		else:			
 			emit_signal("wrong_surface")
+			
+			camera_camera.add_trauma(0.4)
 
 func enable_splash():
 	if not has_target_in_reach_triggered:
@@ -70,7 +73,7 @@ func on_timer_timeout():
 func on_timer_timeout_reset():
 	if not reset_timer.is_stopped():
 		is_dipped_down = false
-		print("dip_up")		
+		print("dip_up")
 		
 		reset_timer.stop()
 		self.translate(Vector3(0,OFFSET,0))
