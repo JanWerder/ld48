@@ -20,7 +20,7 @@ func _physics_process(delta):
 		if distance <=  MAX_DISTANCE:
 			var velocity = Vector3(player.bait.transform.origin - self.transform.origin).normalized()*2;
 			velocity.y = 0
-			self.look_at(player.bait.transform.origin, Vector3.UP)
+			#self.look_at(player.bait.transform.origin, Vector3.UP)
 			velocity = move_and_slide(velocity);
 			if distance <= 1.1:
 				player.bait.enable_splash()

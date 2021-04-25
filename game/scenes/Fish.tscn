@@ -28,13 +28,15 @@ visible = false
 [node name="RealBodies" type="Spatial" parent="."]
 
 [node name="Trash_Yogurt" parent="RealBodies" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.195632 )
 visible = false
 
 [node name="Trash_Bottle" parent="RealBodies" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.151319 )
 visible = false
 
 [node name="Trash_FlipFlop" parent="RealBodies" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.141278 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.335173 )
 visible = false
 
 [node name="Win_Krone" parent="RealBodies" instance=ExtResource( 6 )]

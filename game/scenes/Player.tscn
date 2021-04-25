@@ -50,22 +50,18 @@ node_connections = [ "output", 0, "RodThrow", "RodThrow", 0, "IdleOrWalk", "RodT
 [node name="Armature" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
-[node name="Skeleton" parent="Armature" index="0"]
-bones/5/bound_children = [ NodePath("BoneAttachment2") ]
-bones/14/bound_children = [ NodePath("BoneAttachment") ]
-
 [node name="Racoon_Head001" parent="Armature/Skeleton" index="0"]
 material/0 = SubResource( 1 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 0.352119, 0.403739, 0.844397, 0.793648, 0.349416, -0.498026, -0.496118, 0.845519, -0.197391, -0.31952, 0.82467, 0.273643 )
+transform = Transform( 0.397433, 0.434678, 0.808147, 0.777582, 0.308103, -0.548121, -0.487249, 0.846242, -0.215548, -0.315127, 0.822883, 0.274409 )
 bone_name = "RightHand"
 
 [node name="FishingRod" parent="Armature/Skeleton/BoneAttachment" index="0" instance=ExtResource( 3 )]
 transform = Transform( -0.866025, 0.5, -4.37114e-08, 3.78552e-08, -2.18557e-08, -1, -0.5, -0.866025, 1.91069e-15, 0, 0, 0 )
 
 [node name="BoneAttachment2" type="BoneAttachment" parent="Armature/Skeleton" index="2"]
-transform = Transform( 0.996481, -0.0413899, -0.072877, 0.030817, 0.98958, -0.140649, 0.077939, 0.137908, 0.987373, -0.0169035, 1.06062, 0.0478678 )
+transform = Transform( 0.99709, -0.0340671, -0.0681939, 0.0253293, 0.991818, -0.125124, 0.0718984, 0.123033, 0.989795, -0.0123592, 1.06026, 0.0440139 )
 bone_name = "Head"
 
 [node name="HoldPosition" type="Spatial" parent="Armature/Skeleton/BoneAttachment2" index="0"]
