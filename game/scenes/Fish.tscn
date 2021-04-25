@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/Fish.gd" type="Script" id=1]
 [ext_resource path="res://scenes/FishFollow.glb" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://models/Trash_Bottle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://models/Trash_FlipFlop.tscn" type="PackedScene" id=5]
 [ext_resource path="res://models/Win_Krone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Winning Effects.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CylinderShape" id=2]
 height = 1.08953
@@ -21,6 +22,9 @@ transform = Transform( -0.487479, 0, 0.873135, 0, 1, 0, -0.873135, 0, -0.487479,
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 2 )
 
+[node name="WinningParticle" parent="." instance=ExtResource( 7 )]
+visible = false
+
 [node name="RealBodies" type="Spatial" parent="."]
 
 [node name="Trash_Yogurt" parent="RealBodies" instance=ExtResource( 3 )]
@@ -30,6 +34,7 @@ visible = false
 visible = false
 
 [node name="Trash_FlipFlop" parent="RealBodies" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.141278 )
 visible = false
 
 [node name="Win_Krone" parent="RealBodies" instance=ExtResource( 6 )]

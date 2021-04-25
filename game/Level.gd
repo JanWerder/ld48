@@ -11,6 +11,16 @@ const WINNING_AMOUNT = 3
 func _ready():
 	OS.window_fullscreen = true
 	spawn_fish()
+	
+	yield(get_tree().create_timer(1), "timeout")
+	get_node("GUI").get_node("Cat").visible = true
+	
+	yield(get_tree().create_timer(0.75), "timeout")
+	get_node("GUI").get_node("Fishing").visible = true
+	
+	yield(get_tree().create_timer(2), "timeout")
+	get_node("GUI").get_node("Cat").visible = false
+	get_node("GUI").get_node("Fishing").visible = false
 
 func _input(event):
 	if event.is_action_pressed("quit"):
@@ -33,3 +43,6 @@ func spawn_fish():
 		
 func is_winner_fish():
 	return !amount_fished < WINNING_AMOUNT
+
+func show_thanks():
+	get_node("GUI").get_node("Thanks").visible = true

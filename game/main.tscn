@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -7,6 +7,12 @@
 [ext_resource path="res://Level.gd" type="Script" id=5]
 [ext_resource path="res://models/Palme.glb" type="PackedScene" id=6]
 [ext_resource path="res://Camera.gd" type="Script" id=7]
+[ext_resource path="res://models/mini-wakuwaku.otf" type="DynamicFontData" id=8]
+[ext_resource path="res://materials/Logo_Cat.png" type="Texture" id=9]
+[ext_resource path="res://models/Rock 02.glb" type="PackedScene" id=10]
+[ext_resource path="res://models/Rock 03.glb" type="PackedScene" id=11]
+[ext_resource path="res://models/Rock 01.glb" type="PackedScene" id=12]
+[ext_resource path="res://materials/Logo_Fishing.png" type="Texture" id=13]
 
 [sub_resource type="Environment" id=1]
 background_mode = 2
@@ -36,8 +42,30 @@ data = PoolVector3Array( 25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, 
 [sub_resource type="BoxShape" id=8]
 extents = Vector3( 0.0235772, 1.11565, 0.318018 )
 
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 1, 2.68929, 1 )
+
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.340967, 4.11465, 0.505161 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 50
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="Theme" id=11]
+default_font = SubResource( 10 )
+Label/colors/font_color = Color( 1, 1, 1, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = null
+Label/styles/normal = null
 
 [node name="Level" type="Spatial"]
 script = ExtResource( 5 )
@@ -138,7 +166,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.56461, 0, 0 )
 [node name="03" type="Spatial" parent="SpawnPoints"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.49617, 0, -8.76182 )
 
+[node name="04" type="Spatial" parent="SpawnPoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.1873, 0, -0.29277 )
+
+[node name="05" type="Spatial" parent="SpawnPoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50508, 0, 8.13704 )
+
 [node name="Props" type="Spatial" parent="."]
+
+[node name="Rock 02" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 0.642788, 0, 0.766044, 0, 1, 0, -0.766044, 0, 0.642788, 5.3915, -2.45201, -15.2481 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 02"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 02/StaticBody"]
+shape = SubResource( 12 )
 
 [node name="Palme2" parent="Props" instance=ExtResource( 6 )]
 transform = Transform( -0.315136, -0.0827148, 0.945435, 0, 0.996194, 0.0871557, -0.949047, 0.0274659, -0.313936, 24.53, 0, -10.146 )
@@ -193,3 +235,128 @@ transform = Transform( 0.939693, -0.144544, 0.309975, 0, 0.906307, 0.422618, -0.
 [node name="CollisionShape" type="CollisionShape" parent="Props/Palme6/StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.021847, -0.177929 )
 shape = SubResource( 9 )
+
+[node name="Rock 01" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7198, -2.45201, 1.14896 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 01"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 01/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 03" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 1.92836, 0, 2.29813, 0, 1, 0, -2.29813, 0, 1.92836, -21.9675, -0.437011, -14.109 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 03"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 03/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 04" parent="Props" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.7267, -0.408428, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 04"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 04/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 05" parent="Props" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7413, 0, -16.7064 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 05"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 05/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 06" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 0.173648, 0, 0.984808, 0, 1, 0, -0.984808, 0, 0.173648, -12.0261, -0.579656, -17.2779 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 06"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 06/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 07" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 3.83022, 0, 1.28558, 0, 2, 0, -3.21394, 0, 1.53209, 6.68135, -1.55046, 25.216 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 07"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 07/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 08" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, 9.47182, -0.437015, 21.2696 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 08"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 08/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Rock 09" parent="Props" instance=ExtResource( 12 )]
+transform = Transform( 0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -6.5289, -1.21027, -21.1053 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Rock 09"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Rock 09/StaticBody"]
+shape = SubResource( 12 )
+
+[node name="Palme7" parent="Props" instance=ExtResource( 6 )]
+transform = Transform( -0.315136, -0.0827148, 0.945435, 0, 0.996194, 0.0871557, -0.949047, 0.0274659, -0.313936, -10.2078, 0, -19.1773 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Palme7"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Palme7/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.021847, -0.177929 )
+shape = SubResource( 9 )
+
+[node name="Palme8" parent="Props" instance=ExtResource( 6 )]
+transform = Transform( 0.364828, -0.193581, 0.910728, 0, 0.978147, 0.207912, -0.931075, -0.075852, 0.356855, 1.52799, -0.196773, 5.81612 )
+
+[node name="StaticBody" type="StaticBody" parent="Props/Palme8"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Props/Palme8/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.021847, -0.177929 )
+shape = SubResource( 9 )
+
+[node name="GUI" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -73.5
+margin_top = -37.0
+margin_right = 73.5
+margin_bottom = 37.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cat" type="Sprite" parent="GUI"]
+visible = false
+position = Vector2( 85.5946, -33.8591 )
+scale = Vector2( 1.00124, 0.982317 )
+texture = ExtResource( 9 )
+
+[node name="Fishing" type="Sprite" parent="GUI"]
+visible = false
+position = Vector2( 84.4054, -29.1022 )
+texture = ExtResource( 13 )
+
+[node name="Thanks" type="Label" parent="GUI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -253.5
+margin_top = -90.1697
+margin_right = 253.5
+margin_bottom = 84.8303
+theme = SubResource( 11 )
+text = "That's it!
+Thanks for playing"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
