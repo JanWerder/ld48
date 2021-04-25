@@ -27,6 +27,8 @@ var camera_x_rot = 0.0
 var is_fishing = false
 var bait = null
 
+signal pullout_fish
+
 func _init():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -79,7 +81,11 @@ func _physics_process(delta):
 	
 	if is_fishing and Input.is_action_just_pressed("fish") and bait:
 		if bait.is_dipped_down:
-			pass
+			emit_signal("pullout_fish")
+			on_clear_bait()
+			#player_model.look_at(camera_camera.transform.origin, Vector3.UP)
+			#player_model.global_transform.basis = camera_camera.global_transform.basis
+			return
 		else:
 			bait.queue_free()
 			is_fishing = false
@@ -105,7 +111,7 @@ func _physics_process(delta):
 		get_parent().add_child(bait)
 		bait.look_at(dvel, Vector3.UP)
 		bait.add_collision_exception_with(player)
-		bait.connect("wrong_surface", self, "on_bait_wrong_surface")
+		bait.connect("wrong_surface", self, "on_clear_bait")
 		
 		is_fishing = true	
 
@@ -116,7 +122,7 @@ func rotate_camera(move):
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 	camera_rot.rotation.x = camera_x_rot
 
-func on_bait_wrong_surface():
+func on_clear_bait():
 	print("wrong_surface")
 	bait.queue_free()
 	is_fishing = false

@@ -108,14 +108,17 @@ void fragment() {
 [sub_resource type="OpenSimplexNoise" id=2]
 
 [sub_resource type="NoiseTexture" id=3]
+width = 1024
+height = 1024
 seamless = true
 as_normalmap = true
-bump_strength = 3.4
 noise = SubResource( 2 )
 
 [sub_resource type="OpenSimplexNoise" id=4]
 
 [sub_resource type="NoiseTexture" id=5]
+width = 1024
+height = 1024
 seamless = true
 as_normalmap = true
 bump_strength = 2.5
@@ -124,6 +127,8 @@ noise = SubResource( 4 )
 [sub_resource type="OpenSimplexNoise" id=6]
 
 [sub_resource type="NoiseTexture" id=7]
+width = 1024
+height = 1024
 seamless = true
 as_normalmap = true
 bump_strength = 4.0
