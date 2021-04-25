@@ -54,11 +54,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 material/0 = SubResource( 1 )
 
 [node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 0.398323, 0.437132, 0.806382, 0.77573, 0.308592, -0.550467, -0.48947, 0.844799, -0.216177, -0.31626, 0.823133, 0.275064 )
+transform = Transform( 0.35432, 0.401958, 0.844326, 0.795837, 0.344485, -0.49797, -0.49102, 0.848386, -0.197835, -0.317926, 0.823997, 0.274319 )
 bone_name = "RightHand"
 
 [node name="FishingRod" parent="Armature/Skeleton/BoneAttachment" index="0" instance=ExtResource( 3 )]
 transform = Transform( -0.866025, 0.5, -4.37114e-08, 3.78552e-08, -2.18557e-08, -1, -0.5, -0.866025, 1.91069e-15, 0, 0, 0 )
+
+[node name="BoneAttachment2" type="BoneAttachment" parent="Armature/Skeleton" index="2"]
+transform = Transform( 0.996654, -0.0361469, -0.0732994, 0.0249985, 0.98872, -0.147673, 0.0778102, 0.145346, 0.986316, -0.0141978, 1.06054, 0.047595 )
+bone_name = "Head"
+
+[node name="HoldPosition" type="Spatial" parent="Armature/Skeleton/BoneAttachment2" index="0"]
+transform = Transform( 0.999947, 0.00679985, 0.00763549, -0.0066708, 0.999837, -0.0168032, -0.00774852, 0.0167514, 0.99983, 0.0317869, 1.34913, -0.16835 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 3 )

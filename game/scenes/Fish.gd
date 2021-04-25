@@ -2,7 +2,8 @@ extends KinematicBody
 
 onready var player = null
 onready var dummy_body = get_node("DummyBody")
-onready var real_body = get_node("RealBody")
+onready var real_body = get_node("RealBodies")
+onready var level = get_tree().get_root().get_node("Level")
 
 const MAX_DISTANCE = 10
 
@@ -27,10 +28,30 @@ func _physics_process(delta):
 
 func on_pullout_fish():
 	self.in_water = false
-	var hold_position = player.get_node("CameraBase").get_node("HoldPosition")
+	var hold_position = player.get_node("PlayerModel").get_node("Armature/Skeleton/BoneAttachment2/HoldPosition")
 	self.global_transform.origin = hold_position.global_transform.origin
 	self.dummy_body.visible = false
-	self.real_body.visible = true
 	
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	
+	if not level.is_winner_fish():	
+		var maxCount = self.real_body.get_child_count()
+		var index = rng.randi_range(0, maxCount-2)
+		self.real_body.visible = true
+		self.real_body.get_children()[index].visible = true
+	else:
+		self.real_body.visible = true
+		self.real_body.get_children()[self.real_body.get_child_count()-1].visible = true
+	
+	level.amount_fished += 1
+	
+	if not level.is_done:
+		level.spawn_fish()
+	
+	print(self.global_transform.origin)
 	yield(get_tree().create_timer(3), "timeout")
 	self.queue_free()
+
+func is_still_decoy():
+	return in_water
