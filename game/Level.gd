@@ -21,6 +21,9 @@ func spawn_fish():
 	var i = rng.randi_range(0, spawn_points.get_children().size()-1)
 	var spawn_point = spawn_points.get_children()[i]
 	
+	if fish:
+		fish.queue_free()
+	
 	fish = preload("res://scenes/Fish.tscn").instance()
 	fish.global_transform.origin = spawn_point.global_transform.origin
 	add_child(fish)

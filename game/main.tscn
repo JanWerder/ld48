@@ -52,6 +52,7 @@ script = ExtResource( 2 )
 mesh = SubResource( 2 )
 
 [node name="Foot" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0819768, 0 )
 shape = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]

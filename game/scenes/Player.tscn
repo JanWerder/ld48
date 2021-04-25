@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://models/T_Cat.png" type="Texture" id=1]
 [ext_resource path="res://models/Player.gltf" type="PackedScene" id=2]
+[ext_resource path="res://models/FishingRod.glb" type="PackedScene" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 1 )
@@ -30,7 +31,7 @@ animation = "Fishing Idle-loop"
 animation = "Walk-loop"
 
 [sub_resource type="AnimationNodeBlendTree" id=3]
-graph_offset = Vector2( -598, -323.39 )
+graph_offset = Vector2( -617, -22.39 )
 nodes/BlendTree/node = SubResource( 10 )
 nodes/BlendTree/position = Vector2( 20, -100 )
 nodes/IdleOrWalk/node = SubResource( 5 )
@@ -51,6 +52,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Racoon_Head001" parent="Armature/Skeleton" index="0"]
 material/0 = SubResource( 1 )
+
+[node name="BoneAttachment" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
+transform = Transform( 0.398323, 0.437132, 0.806382, 0.77573, 0.308592, -0.550467, -0.48947, 0.844799, -0.216177, -0.31626, 0.823133, 0.275064 )
+bone_name = "RightHand"
+
+[node name="FishingRod" parent="Armature/Skeleton/BoneAttachment" index="0" instance=ExtResource( 3 )]
+transform = Transform( -0.866025, 0.5, -4.37114e-08, 3.78552e-08, -2.18557e-08, -1, -0.5, -0.866025, 1.91069e-15, 0, 0, 0 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource( 3 )
