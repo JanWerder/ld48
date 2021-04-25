@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://models/T_Cat.png" type="Texture" id=1]
+[ext_resource path="res://models/Player.gltf" type="PackedScene" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "Frisbee Throw-loop"
+
+[sub_resource type="AnimationNodeTimeScale" id=9]
+
+[sub_resource type="AnimationNodeBlendTree" id=10]
+graph_offset = Vector2( -348, -130 )
+nodes/Animation/node = SubResource( 8 )
+nodes/Animation/position = Vector2( -260, 60 )
+nodes/TimeScale/node = SubResource( 9 )
+nodes/TimeScale/position = Vector2( 20, 80 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeBlend2" id=5]
+
+[sub_resource type="AnimationNodeOneShot" id=6]
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "Fishing Idle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "Walk-loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=3]
+graph_offset = Vector2( -598, -323.39 )
+nodes/BlendTree/node = SubResource( 10 )
+nodes/BlendTree/position = Vector2( 20, -100 )
+nodes/IdleOrWalk/node = SubResource( 5 )
+nodes/IdleOrWalk/position = Vector2( 0, 140 )
+nodes/RodThrow/node = SubResource( 6 )
+nodes/RodThrow/position = Vector2( 300, -40 )
+nodes/idle/node = SubResource( 7 )
+nodes/idle/position = Vector2( -280, 80 )
+nodes/output/position = Vector2( 640, 120 )
+nodes/walk/node = SubResource( 2 )
+nodes/walk/position = Vector2( -260, 220 )
+node_connections = [ "output", 0, "RodThrow", "RodThrow", 0, "IdleOrWalk", "RodThrow", 1, "BlendTree", "IdleOrWalk", 0, "idle", "IdleOrWalk", 1, "walk" ]
+
+[node name="Player" instance=ExtResource( 2 )]
+
+[node name="Armature" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="Racoon_Head001" parent="Armature/Skeleton" index="0"]
+material/0 = SubResource( 1 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="4"]
+tree_root = SubResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/BlendTree/TimeScale/scale = 3.0
+parameters/IdleOrWalk/blend_amount = 0.0
+parameters/RodThrow/active = false

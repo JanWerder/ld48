@@ -3,6 +3,7 @@ extends Spatial
 onready var spawn_points = $SpawnPoints
 
 var fish = null
+var is_done = false
 
 func _ready():
 	OS.window_fullscreen = true

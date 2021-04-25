@@ -3,10 +3,13 @@ extends KinematicBody
 onready var player_model = $PlayerModel
 onready var player = self
 onready var camera_base = $CameraBase
-onready var animation_tree = $AnimationTree
 onready var camera_rot = camera_base.get_node(@"CameraRot")
 onready var camera_spring_arm = camera_rot.get_node(@"SpringArm")
 onready var camera_camera = camera_spring_arm.get_node(@"Camera")
+onready var animation_tree = player_model.get_node("AnimationTree")
+onready var animation_player = player_model.get_node("AnimationPlayer")
+onready var level = get_tree().get_root().get_node("Level")
+
 
 var orientation = Transform()
 var root_motion = Transform()
@@ -28,6 +31,7 @@ var is_fishing = false
 var bait = null
 
 signal pullout_fish
+signal shoot_rod
 
 func _init():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -35,6 +39,7 @@ func _init():
 func _ready():
 	orientation = player_model.global_transform
 	orientation.origin = Vector3()
+	animation_player.get_animation("Frisbee Throw-loop").loop = false
 
 func _physics_process(delta):
 	var camera_move = Vector2(
@@ -58,12 +63,12 @@ func _physics_process(delta):
 	camera_x.y = 0
 	camera_x = camera_x.normalized()
 	
+	animation_tree["parameters/IdleOrWalk/blend_amount"] = motion.length()	
 
 	var target = camera_x * motion.x + camera_z * motion.y
 	if target.length() > 0.001:
 		var q_from = orientation.basis.get_rotation_quat()
 		var q_to = Transform().looking_at(target, Vector3.UP).basis.get_rotation_quat()
-		# Interpolate current rotation with desired one.
 		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATION_INTERPOLATE_SPEED))
 	
 	velocity.x = -motion.x * SPEED
@@ -91,29 +96,34 @@ func _physics_process(delta):
 			is_fishing = false
 	
 	if not is_fishing and Input.is_action_just_pressed("fish"):
-		var shoot_origin = player_model.global_transform.origin
-		var ray_from = camera_camera.project_ray_origin(Vector2(0,0))
-		var ray_dir = camera_camera.project_ray_normal(Vector2(0,0))
+		animation_tree.set("parameters/RodThrow/active", true)	
 		
-		var shoot_target
-		var col = get_world().direct_space_state.intersect_ray(ray_from, ray_from + ray_dir * 1000, [self], 0b11)
-		if col.empty():
-			shoot_target = ray_from + ray_dir * 1000
-		else:
-			shoot_target = col.position
-		var shoot_dir = (shoot_target - shoot_origin).normalized()
-		
-		bait = preload("res://scenes/Bait.tscn").instance()
-		bait.global_transform.origin = shoot_origin + Vector3(0,3,0)
-		var dvel = velocity + Vector3(0,2,0)
-		#print("vel", dvel)
-		bait.shoot_dir = dvel
-		get_parent().add_child(bait)
-		bait.look_at(dvel, Vector3.UP)
-		bait.add_collision_exception_with(player)
-		bait.connect("wrong_surface", self, "on_clear_bait")
+		yield(get_tree().create_timer(.15), "timeout")
+		shoot_rod()
 		
 		is_fishing = true	
+		
+func shoot_rod():
+	var shoot_origin = player_model.global_transform.origin
+	var ray_from = camera_camera.project_ray_origin(Vector2(0,0))
+	var ray_dir = camera_camera.project_ray_normal(Vector2(0,0))
+	
+	var shoot_target
+	var col = get_world().direct_space_state.intersect_ray(ray_from, ray_from + ray_dir * 1000, [self], 0b11)
+	if col.empty():
+		shoot_target = ray_from + ray_dir * 1000
+	else:
+		shoot_target = col.position
+	var shoot_dir = (shoot_target - shoot_origin).normalized()
+	
+	bait = preload("res://scenes/Bait.tscn").instance()
+	bait.global_transform.origin = shoot_origin + Vector3(0,3,0)
+	var dvel = velocity + Vector3(0,2,0)
+	bait.shoot_dir = dvel
+	get_parent().add_child(bait)
+	bait.look_at(dvel, Vector3.UP)
+	bait.add_collision_exception_with(player)
+	bait.connect("wrong_surface", self, "on_clear_bait")
 
 func rotate_camera(move):
 	camera_base.rotate_y(-move.x)
@@ -123,6 +133,8 @@ func rotate_camera(move):
 	camera_rot.rotation.x = camera_x_rot
 
 func on_clear_bait():
-	print("wrong_surface")
 	bait.queue_free()
 	is_fishing = false
+	
+	if not level.is_done:
+		level.spawn_fish()

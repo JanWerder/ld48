@@ -31,3 +31,6 @@ func on_pullout_fish():
 	self.global_transform.origin = hold_position.global_transform.origin
 	self.dummy_body.visible = false
 	self.real_body.visible = true
+	
+	yield(get_tree().create_timer(3), "timeout")
+	self.queue_free()
